@@ -1,4 +1,4 @@
-import { UserOrganization } from ".";
+import { UserOrganization } from "./organization";
 
 export type User = {
   id: string;

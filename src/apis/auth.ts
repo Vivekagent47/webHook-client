@@ -8,7 +8,7 @@ export async function login(data: { email: string; password: string }) {
     data: data,
   });
 
-  return res.data;
+  return res;
 }
 
 export async function register(data: UserRegisterData) {
@@ -35,4 +35,15 @@ export async function fetchToken() {
       refreshToken,
     },
   });
+
+  return res.data;
+}
+
+export async function test() {
+  const res = await AxiosInstance({
+    method: "GET",
+    url: "/organization",
+  });
+
+  console.log(res.data);
 }
