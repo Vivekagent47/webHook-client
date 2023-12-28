@@ -1,11 +1,11 @@
 import React, { createContext, useState } from "react";
 
 const useAuthStore = () => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return {
-    loading,
-    setLoading,
+    isLoading,
+    setIsLoading,
   };
 };
 type AuthStoreType = ReturnType<typeof useAuthStore>;
