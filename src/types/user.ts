@@ -1,5 +1,3 @@
-import { UserOrganization } from "./organization";
-
 export type User = {
   id: string;
   firstName: string;
@@ -20,15 +18,4 @@ export type UserRegisterData = {
   lastName: string;
   email: string;
   password: string;
-};
-
-export type AuthTokens = {
-  accessToken: string;
-  refreshToken: string;
-};
-
-export type UserAuthData = {
-  user: User;
-  tokens: AuthTokens;
-  organizations: UserOrganization[];
 };
