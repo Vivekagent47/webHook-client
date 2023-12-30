@@ -1,14 +1,15 @@
-import { SyntheticEvent, useContext, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthContext } from "@/context/AuthContext";
-import apis from "@/apis";
 
 const Login = () => {
-  const { setIsLoading, isLoading } = useContext(AuthContext);
-
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [registerData, setRegisterData] = useState({
     email: "",
     password: "",
@@ -18,14 +19,12 @@ const Login = () => {
     try {
       event.preventDefault();
       setIsLoading(true);
-      const res = await apis.auth.login(registerData);
+      await login({
+        email: registerData.email,
+        password: registerData.password,
+      });
 
-      console.log(res);
-      // toast({
-      //   title: "Login Successful",
-      //   description: "You are now logged in",
-      //   variant: "default",
-      // });
+      navigate("/");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       toast.error(err.message || "Unable to login", {
@@ -35,6 +34,14 @@ const Login = () => {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("access-token");
+    if (accessToken) {
+      navigate(-1);
+    }
+  }, []);
+
   return (
     <>
       <form onSubmit={onSubmit}>

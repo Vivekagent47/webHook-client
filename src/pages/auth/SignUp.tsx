@@ -1,11 +1,15 @@
 import { SyntheticEvent, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthContext } from "@/context/AuthContext";
 
 const SignUp = () => {
-  const { setIsLoading, isLoading } = useContext(AuthContext);
+  const { signUp } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [registerData, setRegisterData] = useState({
     firstName: "",
     lastName: "",
@@ -17,12 +21,19 @@ const SignUp = () => {
     try {
       event.preventDefault();
       setIsLoading(true);
-    } catch (err) {
-      // toast({
-      //   title: "Error",
-      //   description: err?.response?.data?.message,
-      //   variant: "destructive",
-      // });
+      await signUp({
+        firstName: registerData.firstName,
+        lastName: registerData.lastName,
+        email: registerData.email,
+        password: registerData.password,
+      });
+      setIsLoading(false);
+      navigate("/");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      toast.error(err.message || "Unable to login", {
+        description: err?.message,
+      });
     } finally {
       setIsLoading(false);
     }

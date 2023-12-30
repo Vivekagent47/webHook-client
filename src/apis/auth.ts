@@ -1,4 +1,5 @@
 import AxiosInstance from "@/lib/axios";
+import { AuthTokens } from "@/types/auth";
 import { UserRegisterData } from "@/types/user";
 
 export async function login(data: { email: string; password: string }) {
@@ -8,7 +9,7 @@ export async function login(data: { email: string; password: string }) {
     data: data,
   });
 
-  return res;
+  return res.data as AuthTokens;
 }
 
 export async function register(data: UserRegisterData) {
@@ -18,16 +19,10 @@ export async function register(data: UserRegisterData) {
     data: data,
   });
 
-  return res.data;
+  return res.data as AuthTokens;
 }
 
-export async function fetchToken() {
-  const refreshToken = localStorage.getItem("refreshToken");
-
-  if (!refreshToken) {
-    return null;
-  }
-
+export async function fetchToken(refreshToken: string) {
   const res = await AxiosInstance({
     method: "POST",
     url: "/auth/refresh",
@@ -36,14 +31,12 @@ export async function fetchToken() {
     },
   });
 
-  return res.data;
+  return res.data as AuthTokens;
 }
 
-export async function test() {
-  const res = await AxiosInstance({
-    method: "GET",
-    url: "/organization",
+export async function logout() {
+  await AxiosInstance({
+    method: "POST",
+    url: "/auth/logout",
   });
-
-  console.log(res.data);
 }

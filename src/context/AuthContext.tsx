@@ -1,15 +1,87 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useMemo } from "react";
+
+import apis from "@/apis";
+import useLocalStorageString from "@/lib/useLocalStorage";
+import { decodeToken } from "@/lib/utils";
+import { UserRegisterData } from "@/types/user";
+import { toast } from "sonner";
 
 const useAuthStore = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [accessToken, setAccessToken] = useLocalStorageString(
+    "access-token",
+    "",
+  );
+  const [refreshToken, setRefreshToken] = useLocalStorageString(
+    "refresh-token",
+    "",
+  );
+
+  const tokenDetails = useMemo(
+    () => (accessToken ? decodeToken(accessToken) : undefined),
+    [accessToken],
+  );
+  const user = useMemo(() => tokenDetails?.user, [tokenDetails]);
+  const orgId = useMemo(() => tokenDetails?.orgId, [tokenDetails]);
+
+  async function login({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) {
+    const response = await apis.auth.login({ email, password });
+    console.log(response);
+    setAccessToken(response.accessToken);
+    setRefreshToken(response.refreshToken);
+  }
+
+  async function signUp(data: UserRegisterData) {
+    const response = await apis.auth.register(data);
+    setAccessToken(response.accessToken);
+    setRefreshToken(response.refreshToken);
+  }
+
+  async function refetchAccessToken() {
+    try {
+      const response = await apis.auth.fetchToken(refreshToken);
+      if (!response) return;
+      setAccessToken(response.accessToken);
+      setRefreshToken(response.refreshToken);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      toast.error("Unable to fetch token", {
+        description: err?.message,
+      });
+    }
+  }
+
+  async function logout() {
+    setAccessToken("");
+    setRefreshToken("");
+  }
+
+  useEffect(() => {
+    if (tokenDetails) {
+      const now = Date.now();
+      const expiresAt = tokenDetails.exp * 1000;
+      const timeLeft = expiresAt - now;
+      if (timeLeft < 0) {
+        refetchAccessToken();
+      }
+    }
+  }, []);
 
   return {
-    isLoading,
-    setIsLoading,
+    user,
+    orgId,
+    login,
+    signUp,
+    logout,
   };
 };
-type AuthStoreType = ReturnType<typeof useAuthStore>;
 
+type AuthStoreType = ReturnType<typeof useAuthStore>;
 export const AuthContext = createContext({} as AuthStoreType);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const store = useAuthStore();
