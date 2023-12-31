@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 
+import { AuthContext } from "@/context/AuthContext";
 import { Organization } from "@/types/organization";
-import { AuthContext } from "./AuthContext";
 
 const useOrgStore = () => {
   const [activeOrg, setActiveOrg] = useState<Organization | null>(null);
