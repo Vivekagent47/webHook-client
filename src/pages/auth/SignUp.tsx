@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext, useState } from "react";
+import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { AuthContext } from "@/context/AuthContext";
 
 const SignUp = () => {
-  const { signUp } = useContext(AuthContext);
+  const { signUp, isLogged } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [registerData, setRegisterData] = useState({
@@ -38,6 +38,12 @@ const SignUp = () => {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate(-1);
+    }
+  }, [isLogged]);
 
   return (
     <>

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { AuthContext } from "@/context/AuthContext";
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { login, isLogged } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [registerData, setRegisterData] = useState({
@@ -36,11 +36,10 @@ const Login = () => {
   }
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("access-token");
-    if (accessToken) {
+    if (isLogged) {
       navigate(-1);
     }
-  }, []);
+  }, [isLogged]);
 
   return (
     <>
