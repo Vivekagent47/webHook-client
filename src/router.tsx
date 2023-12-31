@@ -1,34 +1,32 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
+import Page404 from "@/pages/Page404";
 import Test from "@/pages/Test";
 import Auth from "@/pages/auth";
 import Login from "@/pages/auth/Login";
 import SignUp from "@/pages/auth/SignUp";
-import Page404 from "./pages/Page404";
 
-export const router = createBrowserRouter([
-  {
-    id: "root",
-    path: "/",
-    element: <Test />,
-    errorElement: <Page404 />,
-  },
-  {
-    id: "login",
-    path: "/login",
-    element: (
-      <Auth state="login">
-        <Login />
-      </Auth>
-    ),
-  },
-  {
-    id: "signup",
-    path: "/signup",
-    element: (
-      <Auth state="signup">
-        <SignUp />
-      </Auth>
-    ),
-  },
-]);
+export function Routing() {
+  return (
+    <Routes>
+      <Route path="*" element={<Page404 />} />
+      <Route
+        path="/login"
+        element={
+          <Auth state="login">
+            <Login />
+          </Auth>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <Auth state="signup">
+            <SignUp />
+          </Auth>
+        }
+      />
+      <Route path="/" element={<Test />}></Route>
+    </Routes>
+  );
+}
