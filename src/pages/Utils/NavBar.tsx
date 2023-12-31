@@ -1,3 +1,4 @@
+import Logo from "@/assets/Logo";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 type NavBarProps = {
   setOpenSidebar: (value: boolean) => void;
@@ -38,29 +40,34 @@ const NavBar = ({ setOpenSidebar }: NavBarProps) => {
                 ></path>
               </svg>
             </Button>
-            <a href="/" className="flex ms-2 md:me-24">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8 me-3"
-                alt="FlowBite Logo"
-              />
+            <Link to="/" className="flex ms-2 md:me-24 gap-2">
+              <Logo className="w-8 h-8 text-gray-700 dark:text-white" />
               <span className="self-center text-xl font-semibold lg:text-2xl whitespace-nowrap dark:text-white">
-                Flowbite
+                webHook-Play
               </span>
-            </a>
+            </Link>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Select Team</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Team Details</DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex p-0.5 text-sm bg-gray-800 rounded-full"
+                  className="flex p-0.5 text-s rounded-full focus:outline-none focus:ring-none"
                 >
-                  <img
-                    className="w-8 h-8 rounded-full"
-                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                    alt="user photo"
-                  />
+                  <span className="w-8 h-8 border-gray-800 border-2 rounded-full flex items-center justify-center">
+                    V
+                  </span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
