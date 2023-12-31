@@ -5,7 +5,7 @@ const AxiosInstance = axios.create({ baseURL: BaseUrl });
 
 AxiosInstance.interceptors.request.use(
   (config) => {
-    const token = window.localStorage.getItem("accessToken");
+    const token = window.localStorage.getItem("access-token");
     if (token) {
       config.headers.Authorization = "Bearer " + token;
     }
@@ -23,7 +23,7 @@ AxiosInstance.interceptors.request.use(
 AxiosInstance.interceptors.response.use(
   (response) => {
     // If the request succeeds, we don't have to do anything and just return the response
-    return response.data;
+    return response;
   },
   (error: AxiosError) => {
     // If the error is due to other reasons, we just throw it back to axios
