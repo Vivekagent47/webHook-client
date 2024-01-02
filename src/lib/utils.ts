@@ -14,3 +14,16 @@ export function decodeToken(token: string) {
   const data = JSON.parse(window.atob(base64));
   return data;
 }
+
+export function getClampTextSx(lines = 1) {
+  return {
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    WebkitLineClamp: lines.toString(),
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    whiteSpace: "normal",
+    maxWidth: "100%",
+    lineBreak: "anywhere",
+  } as const;
+}
