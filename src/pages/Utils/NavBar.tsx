@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+
 import Logo from "@/assets/Logo";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,13 +12,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "react-router-dom";
+import { AuthContext } from "@/context/AuthContext";
+import { OrganizationContext } from "@/context/OrgContext";
+import { getClampTextSx } from "@/lib/utils";
 
 type NavBarProps = {
   setOpenSidebar: (value: boolean) => void;
 };
 
 const NavBar = ({ setOpenSidebar }: NavBarProps) => {
+  const { logout } = useContext(AuthContext);
+  const { userOrgs } = useContext(OrganizationContext);
+
   return (
     <nav className="z-50 w-full fixed bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
@@ -42,7 +50,7 @@ const NavBar = ({ setOpenSidebar }: NavBarProps) => {
             </Button>
             <Link to="/" className="flex ms-2 md:me-24 gap-2">
               <Logo className="w-8 h-8 text-gray-700 dark:text-white" />
-              <span className="self-center text-xl font-semibold lg:text-2xl whitespace-nowrap dark:text-white">
+              <span className="self-center text-base text-indigo-700 font-semibold lg:text-xl whitespace-nowrap dark:text-white">
                 webHook-Play
               </span>
             </Link>
@@ -54,8 +62,18 @@ const NavBar = ({ setOpenSidebar }: NavBarProps) => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Team Details</DropdownMenuItem>
+                  {userOrgs.map((item) => {
+                    return (
+                      <DropdownMenuItem
+                        key={item.id}
+                        title={item.name}
+                        style={getClampTextSx(1)}
+                        className="cursor-pointer"
+                      >
+                        {item.name}
+                      </DropdownMenuItem>
+                    );
+                  })}
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -87,11 +105,22 @@ const NavBar = ({ setOpenSidebar }: NavBarProps) => {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Team Details</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
+                    Team Details
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Log out</DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => {
+                    logout();
+                  }}
+                >
+                  Log out
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
