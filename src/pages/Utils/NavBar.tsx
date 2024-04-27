@@ -1,103 +1,75 @@
-import Logo from "@/assets/Logo";
+import { useContext } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "react-router-dom";
+import { AuthContext } from "@/context/AuthContext";
 
-type NavBarProps = {
-  setOpenSidebar: (value: boolean) => void;
-};
+const NavBar = () => {
+  const { logout, user } = useContext(AuthContext);
 
-const NavBar = ({ setOpenSidebar }: NavBarProps) => {
   return (
-    <nav className="z-50 w-full fixed bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-      <div className="px-3 py-3 lg:px-5 lg:pl-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center justify-start rtl:justify-end">
+    <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b bg-white p-4 sm:h-auto sm:px-6">
+      {/* <Breadcrumb className="hidden md:flex">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="#">Dashboard</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="#">Products</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>All Products</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb> */}
+      <div className="relative ml-auto grow-0">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
             <Button
-              variant="ghost"
-              className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              onClick={() => setOpenSidebar(true)}
+              variant="outline"
+              size="icon"
+              className="overflow-hidden rounded-full"
             >
-              <svg
-                className="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  clipRule="evenodd"
-                  fillRule="evenodd"
-                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                ></path>
-              </svg>
+              {user.firstName[0]}
             </Button>
-            <Link to="/" className="flex ms-2 md:me-24 gap-2">
-              <Logo className="w-8 h-8 text-gray-700 dark:text-white" />
-              <span className="self-center text-xl font-semibold lg:text-2xl whitespace-nowrap dark:text-white">
-                webHook-Play
-              </span>
-            </Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">Select Team</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Team Details</DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="flex p-0.5 text-s rounded-full focus:outline-none focus:ring-none"
-                >
-                  <span className="w-8 h-8 border-gray-800 border-2 rounded-full flex items-center justify-center">
-                    V
-                  </span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>
-                  <p
-                    className="text-sm text-gray-900 dark:text-white"
-                    role="none"
-                  >
-                    Neil Sims
-                  </p>
-                  <p
-                    className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
-                    role="none"
-                  >
-                    neil.sims@flowbite.com
-                  </p>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Team Details</DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Log out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className=" w-60">
+            <DropdownMenuLabel>
+              <p
+                className="text-sm text-gray-900 truncate dark:text-white cursor-default"
+                role="none"
+              >
+                {`${user.firstName} ${user.lastName}`}
+              </p>
+              <p
+                className="text-sm font-medium text-gray-600 truncate cursor-default dark:text-gray-300"
+                role="none"
+              >
+                {user.email}
+              </p>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-    </nav>
+    </header>
   );
 };
 

@@ -9,7 +9,7 @@ const Test = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-full flex flex-1 justify-center items-center gap-4">
       <Button
         variant="default"
         size="lg"

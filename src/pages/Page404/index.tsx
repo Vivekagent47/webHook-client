@@ -102,7 +102,7 @@ const Page404 = () => {
           <span className="text-primary text-6xl block">
             <span>4 0 4</span>
           </span>
-          <span className=" text-secondary-foreground text-xl">
+          <span className="text-secondary-foreground text-xl">
             Sorry, We couldn&apos;t find what you are looking for!
           </span>
         </div>
