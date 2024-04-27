@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 
+import Auth from "@/pages/Auth";
+import Login from "@/pages/Auth/Login";
+import SignUp from "@/pages/Auth/SignUp";
 import Page404 from "@/pages/Page404";
 import Test from "@/pages/Test";
-import Auth from "@/pages/auth";
-import Login from "@/pages/auth/Login";
-import SignUp from "@/pages/auth/SignUp";
 
 export function Routing() {
   return (
@@ -26,7 +26,7 @@ export function Routing() {
           </Auth>
         }
       />
-      <Route path="/" element={<Test />}></Route>
+      <Route path="/" element={<Test />} />
     </Routes>
   );
 }

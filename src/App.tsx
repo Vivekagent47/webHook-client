@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Toaster } from "@/components/ui/sonner";
@@ -11,7 +11,6 @@ import { Routing } from "@/router";
 function App() {
   const navigate = useNavigate();
   const { isLogged } = useContext(AuthContext);
-  const [openSidebar, setOpenSidebar] = useState(false);
 
   useEffect(() => {
     if (!isLogged) {
@@ -20,16 +19,16 @@ function App() {
   }, [isLogged]);
 
   return (
-    <>
-      {isLogged && <NavBar setOpenSidebar={setOpenSidebar} />}
-      {isLogged && (
-        <SideBar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
-      )}
-      <div className={cn("flex-1", isLogged && "p-4 lg:ml-64")}>
+    <div className="flex min-h-screen w-full flex-col bg-secondary">
+      {isLogged && <SideBar />}
+      <div
+        className={cn("flex-1", isLogged && "flex flex-col sm:gap-4 sm:pl-14")}
+      >
+        {isLogged && <NavBar />}
         <Routing />
       </div>
       <Toaster richColors closeButton />
-    </>
+    </div>
   );
 }
 

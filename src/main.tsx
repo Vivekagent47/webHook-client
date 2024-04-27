@@ -6,15 +6,18 @@ import App from "@/App.tsx";
 import { AuthProvider } from "@/context/AuthContext";
 import { OrganizationProvider } from "@/context/OrgContext";
 import "@/index.css";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <OrganizationProvider>
-          <App />
-        </OrganizationProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <TooltipProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <OrganizationProvider>
+            <App />
+          </OrganizationProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </TooltipProvider>
   </React.StrictMode>,
 );

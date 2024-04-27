@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import apis from "@/apis";
 import useLocalStorageString from "@/lib/useLocalStorage";
 import { decodeToken } from "@/lib/utils";
-import { UserRegisterData } from "@/types/user";
+import { User, UserRegisterData } from "@/types/user";
 
 const useAuthStore = () => {
   const [accessToken, setAccessToken] = useLocalStorageString(
@@ -15,14 +15,14 @@ const useAuthStore = () => {
     "refresh-token",
     "",
   );
-  const isLogged = useMemo(() => !!accessToken, [accessToken]);
 
+  const isLogged = useMemo(() => !!accessToken, [accessToken]);
   const tokenDetails = useMemo(
     () => (accessToken ? decodeToken(accessToken) : undefined),
     [accessToken],
   );
-  const user = useMemo(() => tokenDetails?.user, [tokenDetails]);
-  const orgId = useMemo(() => tokenDetails?.orgId, [tokenDetails]);
+  const user = useMemo(() => tokenDetails?.user as User, [tokenDetails]);
+  const orgId = useMemo(() => tokenDetails?.orgId as string, [tokenDetails]);
 
   async function login({
     email,
