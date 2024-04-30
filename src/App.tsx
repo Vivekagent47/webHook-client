@@ -21,13 +21,11 @@ function App() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-secondary">
       {isLogged && <SideBar />}
-      <div
-        className={cn("flex-1", isLogged && "flex flex-col sm:gap-4 sm:pl-14")}
-      >
+      <div className={cn("flex-1", isLogged && "flex flex-col sm:gap-4 pl-14")}>
         {isLogged && <NavBar />}
         <Routing />
       </div>
-      <Toaster richColors closeButton />
+      <Toaster richColors closeButton duration={5000} />
     </div>
   );
 }

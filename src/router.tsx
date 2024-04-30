@@ -4,6 +4,7 @@ import Auth from "@/pages/Auth";
 import Login from "@/pages/Auth/Login";
 import SignUp from "@/pages/Auth/SignUp";
 import Page404 from "@/pages/Page404";
+import Setting from "@/pages/Setting";
 import Test from "@/pages/Test";
 
 export function Routing() {
@@ -27,6 +28,7 @@ export function Routing() {
         }
       />
       <Route path="/" element={<Test />} />
+      <Route path="/settings" element={<Setting />} />
     </Routes>
   );
 }
