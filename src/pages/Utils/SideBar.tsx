@@ -6,6 +6,7 @@ import {
   ShoppingCart,
   Users2,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import Logo from "@/assets/Logo";
 import {
@@ -13,7 +14,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Link } from "react-router-dom";
 
 const SideBar = () => {
   return (
@@ -91,7 +91,7 @@ const SideBar = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
-              to="/"
+              to="/settings"
               className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
             >
               <Settings className="h-5 w-5" />

@@ -1,5 +1,14 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,18 +24,18 @@ const NavBar = () => {
   const { logout, user } = useContext(AuthContext);
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b bg-white p-4 sm:h-auto sm:px-6">
-      {/* <Breadcrumb className="hidden md:flex">
+    <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b bg-white py-2 px-4 sm:h-auto sm:px-6">
+      <Breadcrumb className="hidden md:flex">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="#">Dashboard</Link>
+              <Link to="/">Dashboard</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="#">Products</Link>
+              <Link to="/">Products</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -34,7 +43,7 @@ const NavBar = () => {
             <BreadcrumbPage>All Products</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
-      </Breadcrumb> */}
+      </Breadcrumb>
       <div className="relative ml-auto grow-0">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -62,8 +71,9 @@ const NavBar = () => {
               </p>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
+            <Link to="/settings">
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+            </Link>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
