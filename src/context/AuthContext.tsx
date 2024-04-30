@@ -16,13 +16,13 @@ const useAuthStore = () => {
     "",
   );
 
-  const isLogged = useMemo(() => !!accessToken, [accessToken]);
   const tokenDetails = useMemo(
     () => (accessToken ? decodeToken(accessToken) : undefined),
     [accessToken],
   );
   const user = useMemo(() => tokenDetails?.user as User, [tokenDetails]);
   const orgId = useMemo(() => tokenDetails?.orgId as string, [tokenDetails]);
+  const isLogged = useMemo(() => !!user, [user]);
 
   async function login({
     email,
@@ -59,6 +59,7 @@ const useAuthStore = () => {
   }
 
   async function logout() {
+    await apis.auth.logout();
     setAccessToken("");
     setRefreshToken("");
   }
@@ -72,7 +73,7 @@ const useAuthStore = () => {
         refetchAccessToken();
       }
     }
-  }, []);
+  }, [tokenDetails]);
 
   return {
     user,
