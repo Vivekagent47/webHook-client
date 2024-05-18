@@ -10,7 +10,8 @@ import { toast } from "sonner";
 
 import apis from "@/apis";
 import { AuthContext } from "@/context/AuthContext";
-import { UserOrganization } from "@/types/organization";
+import { Organization, UserOrganization } from "@/types/organization";
+import { errorToast } from "@/lib/error";
 
 const useOrgStore = () => {
   const { orgId, isLogged } = useContext(AuthContext);
@@ -23,11 +24,21 @@ const useOrgStore = () => {
     try {
       const data = await apis.org.getUserOrgs();
       setUserOrgs(data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      toast.error("Unable to fetch organizations.", {
-        description: err?.message,
-      });
+    } catch (err) {
+      errorToast("Unable to fetch organizations.", err);
+    }
+  }
+
+  async function updateOrg(orgId: string, data: Partial<Organization>) {
+    try {
+      const updatedOrg = await apis.org.patchOrg(orgId, data);
+      setUserOrgs((prev) =>
+        prev.map((org) => (org.id === orgId ? { ...org, ...data } : org)),
+      );
+
+      toast.success(updatedOrg.message);
+    } catch (err) {
+      errorToast("Unable to update organization.", err);
     }
   }
 
@@ -41,6 +52,7 @@ const useOrgStore = () => {
     activeOrg,
     userOrgs,
     setUserOrgs,
+    updateOrg,
   };
 };
 

@@ -1,10 +1,10 @@
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthContext } from "@/context/AuthContext";
+import { errorToast } from "@/lib/error";
 
 const SignUp = () => {
   const { signUp, isLogged } = useContext(AuthContext);
@@ -29,11 +29,8 @@ const SignUp = () => {
       });
       setIsLoading(false);
       navigate("/");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      toast.error(err.message || "Unable to login", {
-        description: err?.message,
-      });
+    } catch (err) {
+      errorToast("Unable to create account", err);
     } finally {
       setIsLoading(false);
     }

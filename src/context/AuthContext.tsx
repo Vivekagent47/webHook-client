@@ -1,10 +1,10 @@
 import React, { createContext, useEffect, useMemo } from "react";
-import { toast } from "sonner";
 
 import apis from "@/apis";
 import useLocalStorageString from "@/lib/useLocalStorage";
 import { decodeToken } from "@/lib/utils";
 import { User, UserRegisterData } from "@/types/user";
+import { errorToast } from "@/lib/error";
 
 const useAuthStore = () => {
   const [accessToken, setAccessToken] = useLocalStorageString(
@@ -48,13 +48,10 @@ const useAuthStore = () => {
       if (!response) return;
       setAccessToken(response.accessToken);
       setRefreshToken(response.refreshToken);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
+    } catch (err) {
       setAccessToken("");
       setRefreshToken("");
-      toast.error("Unable to fetch token", {
-        description: err?.message,
-      });
+      errorToast("Unable to fetch token", err);
     }
   }
 
