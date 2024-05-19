@@ -1,10 +1,10 @@
-import React, { createContext, useEffect, useMemo } from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 
 import apis from "@/apis";
+import { errorToast } from "@/lib/error";
 import useLocalStorageString from "@/lib/useLocalStorage";
 import { decodeToken } from "@/lib/utils";
 import { User, UserRegisterData } from "@/types/user";
-import { errorToast } from "@/lib/error";
 
 const useAuthStore = () => {
   const [accessToken, setAccessToken] = useLocalStorageString(
@@ -15,6 +15,7 @@ const useAuthStore = () => {
     "refresh-token",
     "",
   );
+  const [pageNotFound, setPageNotFound] = useState(false);
 
   const tokenDetails = useMemo(
     () => (accessToken ? decodeToken(accessToken) : undefined),
@@ -79,6 +80,8 @@ const useAuthStore = () => {
     login,
     signUp,
     logout,
+    pageNotFound,
+    setPageNotFound,
   };
 };
 

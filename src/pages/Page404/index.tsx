@@ -1,9 +1,16 @@
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext, useEffect } from "react";
 
 const Page404 = () => {
   const navigate = useNavigate();
+  const { setPageNotFound } = useContext(AuthContext);
+
+  useEffect(() => {
+    setPageNotFound(true);
+  }, [setPageNotFound]);
 
   return (
     <div className="flex flex-col h-screen justify-center gap-12">
@@ -108,7 +115,13 @@ const Page404 = () => {
         </div>
       </center>
       <center>
-        <Button variant="default" onClick={() => navigate("/")}>
+        <Button
+          variant="default"
+          onClick={() => {
+            setPageNotFound(false);
+            navigate("/");
+          }}
+        >
           Go Home
         </Button>
       </center>

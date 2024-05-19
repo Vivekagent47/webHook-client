@@ -10,7 +10,7 @@ import { Routing } from "@/router";
 
 function App() {
   const navigate = useNavigate();
-  const { isLogged } = useContext(AuthContext);
+  const { isLogged, pageNotFound } = useContext(AuthContext);
 
   useEffect(() => {
     if (!isLogged) {
@@ -20,9 +20,9 @@ function App() {
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-secondary">
-      {isLogged && <SideBar />}
+      {isLogged && !pageNotFound && <SideBar />}
       <div className={cn("flex-1", isLogged && "flex flex-col sm:gap-4 pl-14")}>
-        {isLogged && <NavBar />}
+        {isLogged && !pageNotFound && <NavBar />}
         <Routing />
       </div>
       <Toaster richColors closeButton duration={5000} />
