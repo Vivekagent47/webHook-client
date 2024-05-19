@@ -10,12 +10,19 @@ import { toast } from "sonner";
 
 import apis from "@/apis";
 import { AuthContext } from "@/context/AuthContext";
-import { Organization, UserOrganization } from "@/types/organization";
 import { errorToast } from "@/lib/error";
+import {
+  AddMemberType,
+  Organization,
+  OrganizationMember,
+  UserOrganization,
+} from "@/types/organization";
 
 const useOrgStore = () => {
   const { orgId, isLogged } = useContext(AuthContext);
   const [userOrgs, setUserOrgs] = useState<UserOrganization[]>([]);
+  const [teamMembers, setTeamMembers] = useState<OrganizationMember[]>([]);
+
   const activeOrg = useMemo(() => {
     return userOrgs.find((org) => org.id === orgId);
   }, [orgId, userOrgs]);
@@ -42,9 +49,33 @@ const useOrgStore = () => {
     }
   }
 
+  async function getOrgMembers() {
+    try {
+      const data = await apis.org.getOrgMembers(orgId);
+      setTeamMembers(data);
+    } catch (err) {
+      errorToast("Unable to fetch organization members.", err);
+    }
+  }
+
+  async function addMember(newMember: AddMemberType) {
+    const data = await apis.org.addMember(orgId, newMember);
+    setTeamMembers((prev) => [...prev, data]);
+  }
+
+  async function removeMember(userId: string) {
+    try {
+      await apis.org.removeMember(orgId, userId);
+      setTeamMembers((prev) => prev.filter((member) => member.id !== userId));
+    } catch (err) {
+      errorToast("Unable to remove member.", err);
+    }
+  }
+
   useEffect(() => {
     if (isLogged) {
       getUserOrgs();
+      getOrgMembers();
     }
   }, [isLogged]);
 
@@ -53,6 +84,9 @@ const useOrgStore = () => {
     userOrgs,
     setUserOrgs,
     updateOrg,
+    teamMembers,
+    addMember,
+    removeMember,
   };
 };
 

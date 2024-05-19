@@ -1,4 +1,4 @@
-import { UserRole } from "./user";
+import { User, UserRole } from "./user";
 
 export type Organization = {
   id: string;
@@ -8,5 +8,14 @@ export type Organization = {
 };
 
 export type UserOrganization = Organization & {
+  role: UserRole;
+};
+
+export type OrganizationMember = User & {
+  role: UserRole;
+};
+
+export type AddMemberType = {
+  userEmail: string;
   role: UserRole;
 };

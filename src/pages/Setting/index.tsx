@@ -5,7 +5,6 @@ import OrgSettings from "@/pages/Setting/OrgSettings";
 
 const SETTING_LIST = {
   organization: <OrgSettings />,
-  user: <div>User Settings</div>,
 };
 
 type SettingKey = keyof typeof SETTING_LIST;

@@ -17,14 +17,14 @@ function Breadcrumbs() {
       <BreadcrumbList>
         {paths.map((p, i) => {
           return (
-            <>
-              <BreadcrumbItem key={p} className="capitalize cursor-default">
+            <span key={i}>
+              <BreadcrumbItem key={i} className="capitalize cursor-default">
                 <BreadcrumbLink asChild>
                   <p>{p}</p>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {i < paths.length - 1 && <BreadcrumbSeparator />}
-            </>
+            </span>
           );
         })}
       </BreadcrumbList>

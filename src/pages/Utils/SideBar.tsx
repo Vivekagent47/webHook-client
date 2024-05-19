@@ -1,11 +1,4 @@
-import {
-  Home,
-  LineChart,
-  Package,
-  Settings,
-  ShoppingCart,
-  Users2,
-} from "lucide-react";
+import { Antenna, AreaChart, PlugZap, Send, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import Logo from "@/assets/Logo";
@@ -32,11 +25,11 @@ const SideBar = () => {
               to="/"
               className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
             >
-              <Home className="h-5 w-5" />
-              <span className="sr-only">Dashboard</span>
+              <AreaChart className="h-5 w-5" />
+              <span className="sr-only">Metric</span>
             </Link>
           </TooltipTrigger>
-          <TooltipContent side="right">Dashboard</TooltipContent>
+          <TooltipContent side="right">Metric</TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -44,11 +37,11 @@ const SideBar = () => {
               to="/"
               className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
             >
-              <ShoppingCart className="h-5 w-5" />
-              <span className="sr-only">Orders</span>
+              <PlugZap className="h-5 w-5" />
+              <span className="sr-only">Connections</span>
             </Link>
           </TooltipTrigger>
-          <TooltipContent side="right">Orders</TooltipContent>
+          <TooltipContent side="right">Connections</TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -56,11 +49,11 @@ const SideBar = () => {
               to="/"
               className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
             >
-              <Package className="h-5 w-5" />
-              <span className="sr-only">Products</span>
+              <Antenna className="h-5 w-5" />
+              <span className="sr-only">Requests</span>
             </Link>
           </TooltipTrigger>
-          <TooltipContent side="right">Products</TooltipContent>
+          <TooltipContent side="right">Requests</TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -68,23 +61,11 @@ const SideBar = () => {
               to="/"
               className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
             >
-              <Users2 className="h-5 w-5" />
-              <span className="sr-only">Customers</span>
+              <Send className="h-5 w-5" />
+              <span className="sr-only">Attempts</span>
             </Link>
           </TooltipTrigger>
-          <TooltipContent side="right">Customers</TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Link
-              to="/"
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-            >
-              <LineChart className="h-5 w-5" />
-              <span className="sr-only">Analytics</span>
-            </Link>
-          </TooltipTrigger>
-          <TooltipContent side="right">Analytics</TooltipContent>
+          <TooltipContent side="right">Attempts</TooltipContent>
         </Tooltip>
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 py-5">
