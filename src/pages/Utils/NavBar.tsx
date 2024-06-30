@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AuthContext } from "@/context/AuthContext";
 import Breadcrumbs from "./Breadcrumbs";
+import OrgSwitcher from "@/components/orgSwitcher";
 
 const NavBar = () => {
   const { logout, user } = useContext(AuthContext);
@@ -19,7 +20,8 @@ const NavBar = () => {
   return (
     <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b bg-white py-2 px-4 sm:h-auto sm:px-6">
       <Breadcrumbs />
-      <div className="relative ml-auto grow-0">
+      <div className="flex gap-4 relative ml-auto grow-0">
+        <OrgSwitcher />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button

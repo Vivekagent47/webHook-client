@@ -40,3 +40,12 @@ export async function logout() {
     url: "/auth/logout",
   });
 }
+
+export async function changeOrg(orgId: string) {
+  const data = await AxiosInstance({
+    method: "POST",
+    url: `/auth/change-org/${orgId}`,
+  });
+
+  return data.data as AuthTokens;
+}

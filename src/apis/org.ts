@@ -22,7 +22,7 @@ export async function patchOrg(orgId: string, data: Partial<Organization>) {
 
   const res = await AxiosInstance({
     method: "PATCH",
-    url: `/organization/update/${orgId}`,
+    url: `/organization/${orgId}`,
     data,
   });
 

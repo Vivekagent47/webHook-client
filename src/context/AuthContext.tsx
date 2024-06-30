@@ -62,6 +62,16 @@ const useAuthStore = () => {
     setRefreshToken("");
   }
 
+  async function changeOrg(orgId: string) {
+    try {
+      const data = await apis.auth.changeOrg(orgId);
+      setAccessToken(data.accessToken);
+      setRefreshToken(data.refreshToken);
+    } catch (err) {
+      errorToast("Unable to change organization.", err);
+    }
+  }
+
   useEffect(() => {
     if (tokenDetails) {
       const now = Date.now();
@@ -82,6 +92,7 @@ const useAuthStore = () => {
     logout,
     pageNotFound,
     setPageNotFound,
+    changeOrg,
   };
 };
 
